@@ -3,7 +3,7 @@ from copy import deepcopy
 
 __dpll_cnf = []
 
-def literal(cnf):
+def _literal(cnf):
     clauses = cnf
     literal = None
     for clause in clauses:
@@ -25,7 +25,7 @@ def DPLL(cnf):
     elif [] in dpll_cnf:
         return False
 
-    L  = literal(dpll_cnf)
+    L  = _literal(dpll_cnf)
 
     if DPLL(dpll_cnf + [[L]]):
         return True
@@ -40,3 +40,16 @@ def add_clause(clause:list):
 
 def solver():
     return DPLL(__dpll_cnf)
+
+
+if __name__ == "__main__":
+    print("""
+          Esse arquivo deve ser utilizado de forma modular:
+          import DPLL
+          
+          Será importado as seguintes funções:
+          + add_clause    - para adicionar as clausulas de uma cnf
+          + dpll          - implementação do algoritimo dpll
+          + solver        - retorna a satisfiabilidade das clausas adicionadas
+          
+          """)

@@ -20,3 +20,8 @@ def simplify(s_cnf):
         literal =  [i for i in s_cnf if len(i) == 1][0] if [i for i in s_cnf if len(i) == 1] != [] else []
     return s_cnf
 
+if __name__ == "__main__":
+    print("""
+          Esse arquivo deve ser utilizado de forma modular:
+          from simplify import simplify
+          """)
