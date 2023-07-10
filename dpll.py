@@ -2,13 +2,13 @@ from simplify import simplify
 from copy import deepcopy
 
 __dpll_cnf = []
-
+__sat = []
 def _literal(cnf):
     clauses = cnf
     literal = None
     for clause in clauses:
         for L in clause:
-            if -L != clause:
+            if -L in clause:
                 literal = L
                 break
 
@@ -17,16 +17,16 @@ def _literal(cnf):
     return clauses[0][0] if literal == None else literal
 
 def DPLL(cnf):
-    
+
     dpll_cnf = deepcopy(simplify(cnf))
-                        
+    
     if dpll_cnf == []:
         return True
     elif [] in dpll_cnf:
         return False
 
     L  = _literal(dpll_cnf)
-
+    
     if DPLL(dpll_cnf + [[L]]):
         return True
     elif DPLL(dpll_cnf + [[-L]]):
@@ -37,6 +37,9 @@ def DPLL(cnf):
 
 def add_clause(clause:list):
     __dpll_cnf.append(clause)
+    
+def get_model():
+    return __sat
 
 def solver():
     return DPLL(__dpll_cnf)

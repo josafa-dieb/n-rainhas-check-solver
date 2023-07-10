@@ -3,7 +3,9 @@ from copy import deepcopy
 def simplify(s_cnf):
     s_cnf = deepcopy(s_cnf)
     literal = [i for i in s_cnf if len(i) == 1][0] if [i for i in s_cnf if len(i) == 1] != [] else []
+    
     while literal != []:
+
         s_cnf.remove(literal)
         cursor_i=0
         for i in range(len(s_cnf)):
