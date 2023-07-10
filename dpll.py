@@ -1,20 +1,27 @@
-from simplify import simplify
+from simplify import simplify, __model
 from copy import deepcopy
 
 __dpll_cnf = []
-__sat = []
+
 def _literal(cnf):
     clauses = cnf
-    literal = None
-    for clause in clauses:
-        for L in clause:
-            if -L in clause:
-                literal = L
-                break
+    literal  = []
+    count = []
 
-        if literal != None:
+    for C in clauses:
+        for L in C:
+            if L not in count:
+                count.append(L)
+    i = 0
+
+    while True:
+        if i >= len(count): break
+        literal = count[i]
+        if literal in count and -literal not in count:
             break
-    return clauses[0][0] if literal == None else literal
+        i+=1
+    return literal
+
 
 def DPLL(cnf):
 
@@ -26,7 +33,7 @@ def DPLL(cnf):
         return False
 
     L  = _literal(dpll_cnf)
-    
+
     if DPLL(dpll_cnf + [[L]]):
         return True
     elif DPLL(dpll_cnf + [[-L]]):
@@ -39,7 +46,7 @@ def add_clause(clause:list):
     __dpll_cnf.append(clause)
     
 def get_model():
-    return __sat
+    return __model
 
 def solver():
     return DPLL(__dpll_cnf)

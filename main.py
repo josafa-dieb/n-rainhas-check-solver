@@ -35,9 +35,12 @@ if __name__ == "__main__":
 
     # Diagonal principal
     [dpll.add_clause([-mapping_to_int[f"Q_{i}_{j}"]]) for i in range(1, N+1) for j in range(1, N+1) if i-j == -1]
+
     # Diagonal secundaria
     [dpll.add_clause([-mapping_to_int[f"Q_{i}_{((N+2)-i-1)}"]]) for i in range(1, N+1) ]
-    
+
     [print("Existe um valor satisfazivel") if dpll.solver() else print("não existe um valor satisfazivel")]
-    
+
+    for i in dpll.get_model():
+        print(mapping_to_int_inv[i])
     print(mapping_to_int_inv)
