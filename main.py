@@ -41,6 +41,22 @@ if __name__ == "__main__":
 
     [print("Existe um valor satisfazivel") if dpll.solver() else print("não existe um valor satisfazivel")]
 
+    queens = []
     for i in dpll.get_model():
-        print(mapping_to_int_inv[i])
-    print(mapping_to_int_inv)
+        row = int(mapping_to_int_inv[i].split("_")[1])-1
+        col = int(mapping_to_int_inv[i].split("_")[2])-1
+        queens.append([row, col])
+    print(queens)
+    
+    file = open("./checker/entrada.txt", "w")
+    file.write(f"{N}\n")
+    for i in range(N):
+        for j in range(N):
+            if [i, j] in queens:
+                file.write('1 ')
+            else:
+                file.write("0 ")
+        file.write('\n')
+            
+    
+    file.close()
